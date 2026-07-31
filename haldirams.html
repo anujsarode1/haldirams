@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Haldiram's — Table Order</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --red:#c1272d;
+  --red-dark:#8f1a1f;
+  --gold:#f5a623;
+  --gold-dark:#d68910;
+  --cream:#fff8ec;
+  --brown:#4a2c0a;
+  --green:#1e8449;
+  --text:#2c1a0e;
+  --grey:#7f8c8d;
+  --white:#fff;
+  --card-shadow:0 4px 20px rgba(0,0,0,.1);
+}
+
+body{background:var(--cream);color:var(--text);font-family:'Mukta',sans-serif;overflow-x:hidden;}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,#8f1a1f 0%,#c1272d 55%,#a3201f 100%);
+  color:white;box-shadow:0 4px 20px rgba(0,0,0,.3);
+  position:sticky;top:0;z-index:200;
+}
+.header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px;}
+.logo-text{line-height:1.1;}
+.logo-text h1{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;letter-spacing:.5px;}
+.logo-text span{font-size:11px;opacity:.9;letter-spacing:1.5px;text-transform:uppercase;}
+.header-right{display:flex;align-items:center;gap:10px;}
+
+.table-pill{
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.4);
+  color:white;padding:8px 16px;border-radius:30px;
+  font-weight:700;font-size:13px;letter-spacing:.5px;
+  display:flex;align-items:center;gap:6px;
+}
+
+.cart-btn{position:relative;background:var(--white);color:var(--red);border:none;cursor:pointer;padding:10px 20px;border-radius:30px;font-family:'Mukta',sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:all .2s;white-space:nowrap;}
+.cart-btn:hover{background:var(--cream);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.25);}
+.cart-badge{background:var(--gold);color:var(--brown);width:22px;height:22px;border-radius:50%;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;}
+
+/* HERO */
+.hero{background:#000;height:440px;display:flex;align-items:center;justify-content:center;position:relative;text-align:center;overflow:hidden;}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;}
+.hero-video video{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-content h2{font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,36px);color:white;font-weight:900;text-shadow:0 2px 10px rgba(0,0,0,.4);letter-spacing:.5px;}
+.hero-content p{color:var(--gold);font-size:13px;margin-top:6px;letter-spacing:2px;text-transform:uppercase;font-weight:700;}
+
+/* FILTER */
+.filter-section{background:white;border-bottom:3px solid #f5e3c2;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:81px;z-index:190;}
+.filter-section::-webkit-scrollbar{display:none;}
+.filter-scroll{display:flex;gap:8px;padding:12px 16px;min-width:fit-content;}
+.filter-btn{padding:9px 18px;border:2px solid #f0dbb0;background:white;cursor:pointer;border-radius:25px;font-weight:700;white-space:nowrap;transition:all .25s;font-size:13px;color:#555;font-family:'Mukta',sans-serif;letter-spacing:.3px;}
+.filter-btn:hover,.filter-btn.active{background:var(--red);color:white;border-color:var(--red);box-shadow:0 3px 10px rgba(193,39,45,.35);transform:translateY(-1px);}
+
+/* GRID / ZOMATO-STYLE LIST */
+.products-section{padding:18px;max-width:900px;margin:auto;}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--red-dark);margin-bottom:14px;border-left:4px solid var(--gold);padding-left:12px;}
+.products-grid{display:flex;flex-direction:column;gap:0;}
+
+/* ZOMATO-STYLE CARD */
+.card{
+  background:white;
+  border-bottom:1px solid #f0e3c8;
+  padding:18px 4px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+}
+.card-left{flex:1;min-width:0;padding-top:2px;}
+.card-rating{
+  display:inline-flex;align-items:center;gap:4px;
+  background:#e6f4ea;color:var(--green);
+  font-size:11px;font-weight:800;
+  padding:2px 7px;border-radius:5px;margin-bottom:8px;
+}
+.card-name{font-size:16px;font-weight:700;line-height:1.3;color:var(--text);margin-bottom:6px;}
+.card-price{color:var(--text);font-weight:700;font-size:14px;margin-bottom:6px;}
+.card-desc{font-size:12.5px;color:var(--grey);line-height:1.5;max-width:340px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+.card-right{width:130px;flex-shrink:0;position:relative;}
+.card-img-wrap{width:130px;height:100px;border-radius:14px;overflow:hidden;background:#f5e3c2;box-shadow:0 2px 10px rgba(0,0,0,.12);position:relative;}
+.card-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.veg-badge{position:absolute;top:6px;left:6px;background:white;border:1.5px solid var(--green);border-radius:3px;width:16px;height:16px;display:flex;align-items:center;justify-content:center;z-index:2;}
+.veg-badge::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);display:block;}
+
+.add-btn{
+  position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);
+  background:white;color:var(--red);border:1.5px solid #f0dbb0;
+  cursor:pointer;padding:8px 26px;border-radius:10px;
+  font-weight:800;font-size:13px;letter-spacing:.5px;
+  font-family:'Mukta',sans-serif;
+  box-shadow:0 4px 10px rgba(0,0,0,.18);
+  transition:all .2s;white-space:nowrap;
+}
+.add-btn:hover{background:#fff4ea;transform:translateX(-50%) scale(1.04);}
+.add-btn:active{transform:translateX(-50%) scale(.96);}
+.add-btn.added{background:var(--green);color:white;border-color:var(--green);}
+.qty-controls{
+  position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);
+  display:flex;align-items:center;gap:2px;
+  background:var(--red);border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,.18);overflow:hidden;
+}
+.qty-btn{width:30px;height:34px;border:none;background:var(--red);color:white;cursor:pointer;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center;transition:.15s;}
+.qty-btn:hover{background:var(--red-dark);}
+.qty-num{min-width:22px;text-align:center;font-weight:900;font-size:14px;color:white;background:var(--red);height:34px;display:flex;align-items:center;justify-content:center;}
+
+/* CART OVERLAY */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:998;display:none;opacity:0;transition:opacity .3s;backdrop-filter:blur(3px);}
+.cart-overlay.open{display:block;opacity:1;}
+
+/* CART PANEL */
+.cart-panel{position:fixed;top:0;right:0;width:420px;max-width:100vw;height:100vh;background:white;z-index:999;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);box-shadow:-6px 0 40px rgba(0,0,0,.2);}
+.cart-panel.open{transform:translateX(0);}
+.cart-header{background:linear-gradient(135deg,#8f1a1f,#c1272d);color:white;padding:20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.cart-header h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;}
+.cart-header-right{display:flex;align-items:center;gap:12px;}
+.cart-count-pill{background:var(--gold);color:var(--brown);padding:4px 12px;border-radius:20px;font-weight:900;font-size:14px;}
+.close-cart{background:rgba(255,255,255,.2);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:.2s;}
+.close-cart:hover{background:rgba(255,255,255,.35);}
+
+.cart-items-wrap{flex:1;overflow-y:auto;padding:0;scrollbar-width:thin;scrollbar-color:var(--gold) transparent;}
+.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:var(--grey);padding:40px 20px;text-align:center;}
+.cart-empty-icon{font-size:64px;}
+.cart-empty h4{font-size:18px;color:var(--text);}
+.cart-empty p{font-size:14px;}
+
+.cart-item{display:flex;align-items:center;padding:14px 20px;border-bottom:1px solid #f7ecd6;gap:12px;transition:background .15s;}
+.cart-item:hover{background:#fff8ec;}
+.cart-item-img{width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0;border:2px solid #f5e3c2;background:#f5e3c2;}
+.cart-item-info{flex:1;min-width:0;}
+.cart-item-name{font-weight:700;font-size:14px;color:var(--text);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cart-item-price{color:var(--red);font-weight:700;font-size:14px;margin-top:2px;}
+.cart-item .qty-controls{position:static;transform:none;background:transparent;box-shadow:none;}
+.cart-item .qty-btn{background:#fbe0e0;color:var(--red);border-radius:8px;margin:0 2px;}
+.cart-item .qty-btn:hover{background:var(--red);color:white;}
+.cart-item .qty-num{background:transparent;color:var(--text);}
+
+.cart-footer{flex-shrink:0;border-top:2px solid #f5e3c2;background:var(--cream);}
+.bill-summary{padding:16px 20px 0;}
+.bill-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:14px;color:var(--grey);}
+.bill-row.total{border-top:2px dashed #eeceb0;margin-top:8px;padding-top:12px;font-size:20px;font-weight:900;color:var(--text);}
+.bill-row.total span:last-child{color:var(--green);}
+
+.checkout-form{padding:14px 20px 20px;}
+.checkout-form h4{font-size:15px;font-weight:700;color:var(--brown);margin-bottom:10px;text-transform:uppercase;letter-spacing:.8px;}
+.form-row{display:flex;gap:10px;margin-bottom:10px;}
+.inp-wrap{flex:1;position:relative;}
+.inp-wrap label{display:block;font-size:11px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
+.inp-wrap input{width:100%;padding:11px 14px;border:2px solid #f0dbb0;border-radius:10px;font-size:15px;font-family:'Mukta',sans-serif;background:white;color:var(--text);transition:border .2s;outline:none;}
+.inp-wrap input:focus{border-color:var(--red);}
+.table-locked{
+  width:100%;padding:11px 14px;border:2px solid var(--gold);border-radius:10px;
+  font-size:15px;font-weight:700;background:#fff4dc;color:var(--brown);
+  display:flex;align-items:center;gap:6px;
+}
+
+.order-btn{width:100%;padding:15px;background:linear-gradient(135deg,#1a8a44,#27ae60);color:white;border:none;border-radius:12px;font-size:17px;font-weight:900;font-family:'Mukta',sans-serif;cursor:pointer;letter-spacing:.5px;box-shadow:0 4px 15px rgba(39,174,96,.35);transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.order-btn:hover{background:linear-gradient(135deg,#148f3a,#219a55);transform:translateY(-2px);box-shadow:0 6px 20px rgba(39,174,96,.45);}
+.order-btn:active{transform:translateY(0);}
+.order-btn:disabled{cursor:not-allowed;opacity:.85;transform:none;}
+
+/* THINKING LOADER (inside button) */
+.btn-spinner{
+  width:18px;height:18px;border-radius:50%;
+  border:3px solid rgba(255,255,255,.4);
+  border-top-color:#fff;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* SUCCESS POPUP */
+.success-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.8);background:white;padding:30px 40px;border-radius:20px;box-shadow:0 10px 50px rgba(0,0,0,.25);z-index:1100;text-align:center;display:none;opacity:0;transition:all .3s;border-top:5px solid var(--green);}
+.success-popup.show{display:block;opacity:1;transform:translate(-50%,-50%) scale(1);}
+.success-popup .icon{font-size:50px;margin-bottom:10px;}
+.success-popup h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--green);}
+.success-popup p{font-size:14px;color:var(--grey);margin-top:6px;}
+
+/* CONFETTI BOMB */
+.confetti-piece{
+  position:fixed;top:50%;left:50%;
+  width:9px;height:9px;
+  border-radius:2px;
+  z-index:1150;
+  pointer-events:none;
+  animation:confettiBomb .9s cubic-bezier(.2,.8,.3,1) forwards;
+}
+@keyframes confettiBomb{
+  0%{transform:translate(-50%,-50%) rotate(0deg) scale(1);opacity:1;}
+  100%{transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(.3);opacity:0;}
+}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#333;color:white;padding:12px 24px;border-radius:30px;font-size:14px;font-weight:600;z-index:1200;transition:transform .3s;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+footer{text-align:center;padding:24px;background:var(--brown);color:rgba(255,255,255,.75);font-size:13px;margin-top:30px;}
+footer strong{color:var(--gold);}
+
+/* ADMIN / QR PAGE */
+.admin-wrap{max-width:1100px;margin:0 auto;padding:40px 20px 80px;}
+.admin-header{text-align:center;margin-bottom:36px;}
+.admin-header h1{font-family:'Playfair Display',serif;font-size:34px;color:var(--red-dark);}
+.admin-header p{color:var(--grey);font-size:14px;margin-top:8px;}
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:22px;}
+.table-card{background:white;border-radius:6px;padding:20px 20px 16px;position:relative;box-shadow:0 10px 24px rgba(0,0,0,.12);border:1px solid #f0dbb0;}
+.table-card::before{content:'';position:absolute;inset:6px;border:1.5px dashed #e6c98a;border-radius:2px;pointer-events:none;}
+.table-card h3{text-align:center;font-family:'Playfair Display',serif;color:var(--red-dark);font-size:12px;letter-spacing:2px;margin-bottom:2px;}
+.table-card .num{text-align:center;font-family:'Playfair Display',serif;font-size:34px;font-weight:900;color:var(--text);margin-bottom:10px;}
+.table-card img{display:block;margin:0 auto 10px;border-radius:6px;border:6px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+.table-card p{text-align:center;font-size:12px;color:var(--grey);margin-bottom:12px;}
+.table-card a{display:block;text-align:center;background:var(--red);color:white;text-decoration:none;padding:9px;border-radius:8px;font-weight:700;font-size:13px;}
+.admin-note{background:#fff4dc;border:1px solid var(--gold);border-radius:10px;padding:16px 18px;font-size:13px;color:var(--brown);line-height:1.6;margin-bottom:30px;}
+
+/* ===================== MOBILE MEDIA QUERIES ===================== */
+@media(max-width:768px){
+  .hero{height:150px;}
+  .cart-panel{width:100vw;}
+  .products-section{padding:12px 14px;max-width:100%;}
+  .filter-section{top:73px;}
+}
+@media(max-width:480px){
+  .header-inner{padding:12px 14px;}
+  .logo-text h1{font-size:18px;}
+  .hero{height:130px;}
+  .hero-content h2{font-size:19px;}
+  .hero-content p{font-size:11px;}
+  .products-section{padding:10px 12px 60px;}
+  .section-title{font-size:16px;margin-bottom:10px;}
+
+  /* Zomato-style stacked list on mobile */
+  .card{padding:14px 0;gap:12px;}
+  .card-name{font-size:15px;}
+  .card-desc{font-size:12px;max-width:100%;}
+  .card-right{width:104px;}
+  .card-img-wrap{width:104px;height:88px;border-radius:12px;}
+  .add-btn{padding:7px 18px;font-size:12px;bottom:-12px;}
+  .qty-btn{width:26px;height:30px;}
+  .qty-num{height:30px;font-size:13px;}
+
+  .filter-scroll{padding:10px 12px;gap:6px;}
+  .filter-btn{padding:7px 14px;font-size:12px;}
+
+  .table-pill{font-size:11px;padding:6px 10px;}
+  .cart-btn{padding:9px 14px;font-size:13px;}
+
+  .form-row{flex-direction:column;gap:8px;}
+  .success-popup{padding:26px 24px;width:85vw;}
+}
+@media(max-width:360px){
+  .card-right{width:88px;}
+  .card-img-wrap{width:88px;height:76px;}
+  .card-name{font-size:14px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= ORDER PAGE ================= -->
+<div id="orderPage">
+
+<header>
+  <div class="header-inner">
+    <div class="logo-text">
+      <h1>Haldiram's</h1>
+      <span>Taste of Tradition</span>
+    </div>
+    <div class="header-right">
+      <div class="table-pill" id="tablePill" style="display:none">🪑 Table <span id="tablePillNum"></span></div>
+      <button class="cart-btn" onclick="openCart()">
+        🛒 Cart
+        <div class="cart-badge" id="cartCount">0</div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-video">
+    <video autoplay muted loop playsinline>
+      <source src="./hero-video.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<div class="filter-section">
+  <div class="filter-scroll">
+    <button class="filter-btn active" onclick="filterCategory('all',this)">🍽️ All</button>
+    <button class="filter-btn" onclick="filterCategory('namkeen',this)">🥨 Namkeen</button>
+    <button class="filter-btn" onclick="filterCategory('chaat',this)">🥗 Chaat</button>
+    <button class="filter-btn" onclick="filterCategory('southindian',this)">🥞 South Indian</button>
+    <button class="filter-btn" onclick="filterCategory('northindian',this)">🍛 North Indian Thali</button>
+    <button class="filter-btn" onclick="filterCategory('chinese',this)">🥡 Chinese</button>
+    <button class="filter-btn" onclick="filterCategory('breads',this)">🫓 Breads</button>
+    <button class="filter-btn" onclick="filterCategory('drinks',this)">🥤 Beverages</button>
+    <button class="filter-btn" onclick="filterCategory('sweets',this)">🍬 Sweets</button>
+  </div>
+</div>
+
+<div class="products-section">
+  <div class="section-title" id="sectionTitle">All Items</div>
+  <div class="products-grid" id="productGrid"></div>
+</div>
+
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>🛒 Your Order</h3>
+    <div class="cart-header-right">
+      <div class="cart-count-pill" id="cartCountPanel">0 items</div>
+      <button class="close-cart" onclick="closeCart()">✕</button>
+    </div>
+  </div>
+
+  <div class="cart-items-wrap" id="cartItems">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🍽️</div>
+      <h4>Your plate is empty!</h4>
+      <p>Add delicious items from our menu</p>
+    </div>
+  </div>
+
+  <div class="cart-footer">
+    <div class="bill-summary" id="billSummary" style="display:none">
+      <div class="bill-row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
+      <div class="bill-row total"><span>Total</span><span id="totalPrice">₹0</span></div>
+    </div>
+
+    <div class="checkout-form" id="checkoutForm" style="display:none">
+      <h4>📝 Order Details</h4>
+      <div class="form-row">
+        <div class="inp-wrap">
+          <label>Your Name</label>
+          <input type="text" id="customerName" placeholder="e.g. Ramesh Patel">
+        </div>
+        <div class="inp-wrap" id="tableFieldWrap">
+          <label>Table No.</label>
+          <input type="number" id="tableNo" placeholder="e.g. 5" min="1">
+        </div>
+      </div>
+      <button class="order-btn" id="orderBtn" onclick="placeOrder()">
+        <span id="orderBtnLabel">🍽️ Place Order</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="success-popup" id="successPopup">
+  <div class="icon">✅</div>
+  <h3>Order Placed!</h3>
+  <p>Your order has been sent to the kitchen.</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>© 2026 <strong>Haldiram's</strong> · Table Ordering Demo</footer>
+
+</div>
+
+<!-- ================= ADMIN / QR PAGE (?admin=1) ================= -->
+<div id="adminPage" class="admin-wrap" style="display:none">
+  <div class="admin-header">
+    <h1>Haldiram's — Table QR Codes</h1>
+    <p>Print one card per table. Scanning opens the menu with the table number already filled in.</p>
+  </div>
+  <div class="admin-note">
+    ⚠️ <strong>Before printing:</strong> host this file at a real URL — the QR codes below
+    encode that URL with <code>?table=N</code> added automatically.
+  </div>
+  <div class="admin-grid" id="adminGrid"></div>
+</div>
+
+<script>
+/* =========================================================
+   EmailJS
+   ========================================================= */
+emailjs.init("jczZo2f3e9vL9Nk24");
+const EMAILJS_SERVICE_ID  = "service_8riowot";
+const EMAILJS_TEMPLATE_ID = "template_eyo9az1";
+
+const categoryTitles={
+  all:"All Items",namkeen:"🥨 Namkeen",chaat:"🥗 Chaat",southindian:"🥞 South Indian",
+  northindian:"🍛 North Indian Thali",chinese:"🥡 Chinese",breads:"🫓 Breads",
+  drinks:"🥤 Beverages",sweets:"🍬 Sweets"
+};
+
+/* Replace img paths with your own product photos before going live */
+const products=[
+  {name:"Aloo Bhujia",price:60,category:"namkeen",img:"./bhujia.jpg",desc:"Crisp potato-gram sev, lightly spiced.",rating:"4.3"},
+  {name:"Moong Dal Namkeen",price:70,category:"namkeen",img:"./moongdal.jpg",desc:"Roasted split moong lentils, salted.",rating:"4.2"},
+  {name:"Khatta Meetha Mix",price:60,category:"namkeen",img:"./khattameetha.jpg",desc:"Sweet-tangy classic namkeen mix.",rating:"4.1"},
+  {name:"Navratan Mix",price:65,category:"namkeen",img:"./navratan.jpg",desc:"Nine-ingredient festive namkeen blend.",rating:"4.3"},
+  {name:"Soan Papdi Namkeen Combo",price:120,category:"namkeen",img:"./soanpapdi.jpg",desc:"Sweet and savoury combo pack.",rating:"4.4"},
+
+  {name:"Raj Kachori",price:90,category:"chaat",img:"./rajkachori.jpg",desc:"Crisp shell loaded with lentils, yogurt & chutneys.",rating:"4.5"},
+  {name:"Pani Puri",price:60,category:"chaat",img:"./panipuri.jpg",desc:"6 pieces, tangy mint water on the side.",rating:"4.6"},
+  {name:"Bhel Puri",price:70,category:"chaat",img:"./bhelpuri.jpg",desc:"Puffed rice, sev, chutneys, onion, tomato.",rating:"4.4"},
+  {name:"Aloo Tikki Chaat",price:70,category:"chaat",img:"./alootikki.jpg",desc:"Crisp potato patties topped with yogurt & chutney.",rating:"4.3"},
+  {name:"Dahi Bhalla",price:80,category:"chaat",img:"./dahibhalla.jpg",desc:"Soft lentil dumplings in spiced yogurt.",rating:"4.4"},
+  {name:"Samosa Chaat",price:75,category:"chaat",img:"./samosachaat.jpg",desc:"Crushed samosa, chole, yogurt, chutneys.",rating:"4.5"},
+
+  {name:"Plain Dosa",price:90,category:"southindian",img:"./dosa.jpg",desc:"Crisp rice-lentil crepe, served with sambhar & chutney.",rating:"4.3"},
+  {name:"Masala Dosa",price:110,category:"southindian",img:"./dosa.jpg",desc:"Classic dosa filled with spiced potato masala.",rating:"4.5"},
+  {name:"Idli Sambhar",price:80,category:"southindian",img:"./idli.jpg",desc:"Steamed rice cakes with lentil sambhar.",rating:"4.4"},
+  {name:"Medu Vada",price:80,category:"southindian",img:"./vada.jpg",desc:"Crisp lentil doughnuts, sambhar & chutney.",rating:"4.3"},
+  {name:"Uttapam",price:100,category:"southindian",img:"./uttapam.jpg",desc:"Thick savoury pancake with onion & tomato.",rating:"4.2"},
+
+  {name:"Paneer Butter Masala",price:220,category:"northindian",img:"./panerbm.jpg",desc:"Paneer cubes in a rich buttery tomato gravy.",rating:"4.6"},
+  {name:"Dal Makhani",price:180,category:"northindian",img:"./dalmakhani.jpg",desc:"Slow-cooked black lentils, butter & cream.",rating:"4.5"},
+  {name:"Chole Bhature",price:150,category:"northindian",img:"./cholebhature.jpg",desc:"Spiced chickpeas with fluffy fried bread.",rating:"4.4"},
+  {name:"Rajma Chawal",price:170,category:"northindian",img:"./rajma.jpg",desc:"Kidney bean curry served with steamed rice.",rating:"4.3"},
+  {name:"Veg Thali",price:260,category:"northindian",img:"./thali.jpg",desc:"Dal, sabzi, rice, roti, salad & sweet.",rating:"4.6"},
+  {name:"Malai Kofta",price:230,category:"northindian",img:"./malaikofta.jpg",desc:"Soft paneer dumplings in creamy gravy.",rating:"4.5"},
+  {name:"Kaju Curry",price:250,category:"northindian",img:"./kaju.jpg",desc:"Cashew nuts simmered in mild curry.",rating:"4.4"},
+
+  {name:"Veg Manchurian",price:160,category:"chinese",img:"./manchurian.jpg",desc:"Fried veg dumplings tossed in tangy sauce.",rating:"4.3"},
+  {name:"Hakka Noodles",price:150,category:"chinese",img:"./noodles.jpg",desc:"Stir-fried noodles with veggies.",rating:"4.2"},
+  {name:"Veg Fried Rice",price:150,category:"chinese",img:"./friedrice.jpg",desc:"Wok-tossed rice with mixed vegetables.",rating:"4.2"},
+  {name:"Chilli Paneer",price:190,category:"chinese",img:"./chillipaneer.jpg",desc:"Crisp paneer in spicy chilli-garlic sauce.",rating:"4.4"},
+
+  {name:"Tandoori Roti",price:20,category:"breads",img:"./tandoriroti.jpg",desc:"Whole wheat bread from the clay oven.",rating:"4.2"},
+  {name:"Butter Naan",price:50,category:"breads",img:"./naan.jpg",desc:"Soft leavened bread brushed with butter.",rating:"4.5"},
+  {name:"Laccha Parantha",price:55,category:"breads",img:"./lacha.jpg",desc:"Multi-layered flaky whole wheat bread.",rating:"4.4"},
+  {name:"Missi Roti",price:30,category:"breads",img:"./missiroti.jpg",desc:"Gram flour & wheat flatbread, lightly spiced.",rating:"4.1"},
+
+  {name:"Masala Chai",price:25,category:"drinks",img:"./chai.jpg",desc:"Spiced milk tea, freshly brewed.",rating:"4.5"},
+  {name:"Sweet Lassi",price:60,category:"drinks",img:"./lassi.jpg",desc:"Thick chilled yogurt drink.",rating:"4.4"},
+  {name:"Mango Lassi",price:70,category:"drinks",img:"./mangolassi.jpg",desc:"Yogurt blended with fresh mango pulp.",rating:"4.5"},
+  {name:"Fresh Lime Soda",price:40,category:"drinks",img:"./limesoda.jpg",desc:"Sweet, salted or plain — your choice.",rating:"4.2"},
+  {name:"Cold Coffee",price:70,category:"drinks",img:"./coldcoffee.jpg",desc:"Chilled, whipped, topped with cocoa.",rating:"4.3"},
+  {name:"Butter Milk",price:25,category:"drinks",img:"./buttermilk.jpg",desc:"Spiced churned yogurt drink.",rating:"4.1"},
+
+  {name:"Soan Papdi",price:80,category:"sweets",img:"./soanpapdisweet.jpg",desc:"Flaky, melt-in-mouth gram flour sweet.",rating:"4.4"},
+  {name:"Kaju Katli",price:140,category:"sweets",img:"./kajukatli.jpg",desc:"Cashew fudge with a silver leaf finish.",rating:"4.6"},
+  {name:"Gulab Jamun (2pc)",price:60,category:"sweets",img:"./gulabjamun.jpg",desc:"Soft milk dumplings in rose-cardamom syrup.",rating:"4.6"},
+  {name:"Rasgulla (2pc)",price:60,category:"sweets",img:"./rasgulla.jpg",desc:"Spongy cottage cheese balls in light syrup.",rating:"4.5"},
+  {name:"Moong Dal Halwa",price:120,category:"sweets",img:"./moongdalhalwa.jpg",desc:"Rich lentil halwa slow-cooked in ghee.",rating:"4.5"},
+  {name:"Rabri",price:100,category:"sweets",img:"./rabri.jpg",desc:"Sweetened, thickened, saffron-scented milk.",rating:"4.4"}
+];
+
+let cart=[];
+let lockedTable=null;
+
+/* ---------- URL handling ---------- */
+function initFromURL(){
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('admin')==='1'){
+    document.getElementById('orderPage').style.display='none';
+    document.getElementById('adminPage').style.display='block';
+    renderAdminGrid();
+    return;
+  }
+  const t=params.get('table');
+  if(t){
+    lockedTable=t;
+    document.getElementById('tablePillNum').textContent=t;
+    document.getElementById('tablePill').style.display='flex';
+  }
+}
+
+/* ---------- ADMIN: QR grid ---------- */
+function renderAdminGrid(){
+  const grid=document.getElementById('adminGrid');
+  const base=window.location.origin+window.location.pathname;
+  let html='';
+  for(let t=1;t<=10;t++){
+    const link=`${base}?table=${t}`;
+    const qr=`https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=8&data=${encodeURIComponent(link)}`;
+    html+=`<div class="table-card">
+      <h3>TABLE</h3>
+      <div class="num">${String(t).padStart(2,'0')}</div>
+      <img src="${qr}" width="140" height="140" alt="QR for table ${t}">
+      <p>Scan to see the menu &amp; order</p>
+      <a href="${link}" target="_blank">Open menu ↗</a>
+    </div>`;
+  }
+  grid.innerHTML=html;
+}
+
+/* ---------- RENDER MENU (Zomato-style list cards) ---------- */
+function renderProducts(list){
+  const grid=document.getElementById('productGrid');
+  grid.innerHTML='';
+  if(list.length===0){
+    grid.innerHTML='<div style="text-align:center;padding:40px;color:#999;">No items found</div>';
+    return;
+  }
+  list.forEach(item=>{
+    const idx=products.indexOf(item);
+    const cartItem=cart.find(c=>c.name===item.name);
+    const qty=cartItem?cartItem.quantity:0;
+    grid.innerHTML+=`
+    <div class="card">
+      <div class="card-left">
+        <div class="card-rating">★ ${item.rating||'4.3'}</div>
+        <div class="card-name">${item.name}</div>
+        <div class="card-price">₹${item.price}</div>
+        <div class="card-desc">${item.desc||''}</div>
+      </div>
+      <div class="card-right">
+        <div class="card-img-wrap">
+          <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.style.opacity=0">
+          <div class="veg-badge"></div>
+        </div>
+        ${qty===0
+          ? `<button class="add-btn" id="btn-${idx}" onclick="addToCart(${idx},this)">ADD</button>`
+          : `<div class="qty-controls" id="btn-${idx}">
+              <button class="qty-btn" onclick="removeFromCart(${idx})">−</button>
+              <span class="qty-num">${qty}</span>
+              <button class="qty-btn" onclick="addToCart(${idx},null)">+</button>
+             </div>`
+        }
+      </div>
+    </div>`;
+  });
+}
+
+function filterCategory(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  document.getElementById('sectionTitle').textContent=categoryTitles[cat]||'All Items';
+  renderProducts(cat==='all'?products:products.filter(p=>p.category===cat));
+}
+
+function addToCart(idx,btn){
+  const product=products[idx];
+  const existing=cart.find(c=>c.name===product.name);
+  if(existing){existing.quantity++;}
+  else{cart.push({name:product.name,price:product.price,img:product.img,quantity:1,idx});}
+  if(btn){
+    btn.textContent='✓ ADDED';btn.classList.add('added');
+    setTimeout(()=>{renderCurrentView();},500);
+  } else {
+    renderCurrentView();
+  }
+  updateCartUI();
+  showToast(`${product.name} added to cart`);
+}
+
+function removeFromCart(idx){
+  const product=products[idx];
+  const existing=cart.find(c=>c.name===product.name);
+  if(!existing)return;
+  if(existing.quantity>1){existing.quantity--;}
+  else{cart=cart.filter(c=>c.name!==product.name);}
+  updateCartUI();renderCurrentView();
+}
+
+function renderCurrentView(){
+  const activeFilt=document.querySelector('.filter-btn.active');
+  if(!activeFilt)return;
+  const match=activeFilt.getAttribute('onclick').match(/'([^']+)'/);
+  const cat=match?match[1]:'all';
+  renderProducts(cat==='all'?products:products.filter(p=>p.category===cat));
+}
+
+function updateCartUI(){
+  let totalQty=0,total=0;
+  cart.forEach(i=>{totalQty+=i.quantity;total+=i.price*i.quantity;});
+  document.getElementById('cartCount').textContent=totalQty;
+  document.getElementById('cartCountPanel').textContent=`${totalQty} item${totalQty!==1?'s':''}`;
+
+  const wrap=document.getElementById('cartItems');
+  const bill=document.getElementById('billSummary');
+  const form=document.getElementById('checkoutForm');
+
+  if(cart.length===0){
+    wrap.innerHTML=`<div class="cart-empty">
+      <div class="cart-empty-icon">🍽️</div>
+      <h4>Your plate is empty!</h4>
+      <p>Add delicious items from our menu</p>
+    </div>`;
+    bill.style.display='none';form.style.display='none';
+    return;
+  }
+
+  let html='';
+  cart.forEach(item=>{
+    html+=`<div class="cart-item">
+      <img class="cart-item-img" src="${item.img}" alt="${item.name}" onerror="this.style.opacity=0">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">₹${item.price} × ${item.quantity} = ₹${item.price*item.quantity}</div>
+      </div>
+      <div class="qty-controls">
+        <button class="qty-btn" onclick="removeFromCart(${item.idx})">−</button>
+        <span class="qty-num">${item.quantity}</span>
+        <button class="qty-btn" onclick="addToCart(${item.idx},null)">+</button>
+      </div>
+    </div>`;
+  });
+  wrap.innerHTML=html;
+  document.getElementById('subtotal').textContent='₹'+total;
+  document.getElementById('totalPrice').textContent='₹'+total;
+  bill.style.display='block';form.style.display='block';
+
+  const wrapField=document.getElementById('tableFieldWrap');
+  if(lockedTable){
+    wrapField.innerHTML=`<label>Table No.</label><div class="table-locked">🪑 Table ${lockedTable}</div>`;
+  }
+}
+
+function openCart(){
+  document.getElementById('cartPanel').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCart(){
+  document.getElementById('cartPanel').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ---------- CONFETTI BOMB ---------- */
+function confettiBomb(){
+  const colors=['#c1272d','#f5a623','#1e8449','#2c1a0e','#d68910','#8f1a1f'];
+  for(let i=0;i<36;i++){
+    const p=document.createElement('div');
+    p.className='confetti-piece';
+    const angle=Math.random()*Math.PI*2;
+    const dist=80+Math.random()*180;
+    p.style.setProperty('--tx',`${Math.cos(angle)*dist}px`);
+    p.style.setProperty('--ty',`${Math.sin(angle)*dist}px`);
+    p.style.setProperty('--rot',`${Math.random()*720-360}deg`);
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    if(Math.random()>0.5) p.style.borderRadius='50%';
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),950);
+  }
+}
+
+/* ---------- PLACE ORDER ---------- */
+function placeOrder(){
+  const name=document.getElementById('customerName').value.trim();
+  const table=lockedTable || document.getElementById('tableNo')?.value.trim();
+  if(!name||!table||cart.length===0){
+    showToast('⚠️ Please fill name, table & add items');return;
+  }
+
+  let orderDetails='';let total=0;
+  cart.forEach(item=>{
+    orderDetails+=`${item.name} | Qty: ${item.quantity} | ₹${item.price*item.quantity}\n`;
+    total+=item.price*item.quantity;
+  });
+  const timestamp=new Date().toLocaleString();
+
+  const btn=document.getElementById('orderBtn');
+  const label=document.getElementById('orderBtnLabel');
+  btn.disabled=true;
+  label.innerHTML=`<div class="btn-spinner"></div> Placing order...`;
+
+  emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{
+    customer_name:name,table_number:table,
+    order_details:orderDetails,total_price:total,order_time:timestamp
+  }).then(()=>{
+    confettiBomb();
+    showSuccessPopup();
+    cart=[];updateCartUI();renderCurrentView();
+    document.getElementById('customerName').value='';
+    closeCart();
+  }).catch(e=>{
+    console.log(e);
+    showToast('❌ Failed to send order — check EmailJS setup');
+  }).finally(()=>{
+    btn.disabled=false;
+    label.innerHTML='🍽️ Place Order';
+  });
+}
+
+function showSuccessPopup(){
+  const p=document.getElementById('successPopup');
+  p.classList.add('show');
+  setTimeout(()=>p.classList.remove('show'),3000);
+}
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+/* ---------- init ---------- */
+initFromURL();
+renderProducts(products);
+</script>
+</body>
+</html>
