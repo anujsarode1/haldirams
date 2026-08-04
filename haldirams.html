@@ -194,7 +194,7 @@ header{
 }
 .popup-timer-track{position:absolute;top:0;left:0;width:100%;height:4px;background:#eee0cc;}
 .popup-timer-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--red));}
-.popup-timer-bar.filling{transition:width 2.6s linear;width:100%;}
+.popup-timer-bar.filling{transition:width 3s linear;width:100%;}
 .success-popup .icon{font-size:50px;margin-bottom:10px;}
 .success-popup h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--green);}
 .success-popup p{font-size:14px;color:var(--grey);margin-top:6px;}
@@ -309,22 +309,24 @@ footer strong{color:var(--gold);}
 <div class="filter-section">
   <div class="filter-scroll">
     <button class="filter-btn active" onclick="filterCategory('all',this)">🍽️ All</button>
-    <button class="filter-btn" onclick="filterCategory('soup',this)">🍜 Soup</button>
-    <button class="filter-btn" onclick="filterCategory('burgerwich',this)">🥪 Burgerwich</button>
-    <button class="filter-btn" onclick="filterCategory('italian',this)">🍕 Italian</button>
-    <button class="filter-btn" onclick="filterCategory('snacks',this)">🍟 Snacks</button>
+    <button class="filter-btn" onclick="filterCategory('readytocook',this)">🥣 Ready To Cook</button>
     <button class="filter-btn" onclick="filterCategory('chaat',this)">🥗 Dilli Ki Chaat</button>
-    <button class="filter-btn" onclick="filterCategory('speciality',this)">⭐ Speciality</button>
-    <button class="filter-btn" onclick="filterCategory('thali',this)">🍛 Thali</button>
-    <button class="filter-btn" onclick="filterCategory('kebabs',this)">🍢 Kebabs</button>
-    <button class="filter-btn" onclick="filterCategory('mains',this)">🍲 Main Course</button>
-    <button class="filter-btn" onclick="filterCategory('biryani',this)">🍚 Biryani</button>
-    <button class="filter-btn" onclick="filterCategory('chawal',this)">🍚 Chawal Khazana</button>
-    <button class="filter-btn" onclick="filterCategory('khichdi',this)">🥣 Khichdi</button>
-    <button class="filter-btn" onclick="filterCategory('tandoor',this)">🫓 Tandoor Se</button>
+    <button class="filter-btn" onclick="filterCategory('combos',this)">🍽️ N. Indian Combos</button>
+    <button class="filter-btn" onclick="filterCategory('mains',this)">🍲 N. Indian Main Course</button>
+    <button class="filter-btn" onclick="filterCategory('kebabs',this)">🍢 Kebabs & More</button>
     <button class="filter-btn" onclick="filterCategory('ricebowl',this)">🍚 Rice Bowl</button>
-    <button class="filter-btn" onclick="filterCategory('combos',this)">🍽️ Combos</button>
-    <button class="filter-btn" onclick="filterCategory('sides',this)">🥗 Side Story</button>
+    <button class="filter-btn" onclick="filterCategory('kathi',this)">🌯 Kathi Roll's</button>
+    <button class="filter-btn" onclick="filterCategory('thali',this)">🍛 Thali</button>
+    <button class="filter-btn" onclick="filterCategory('khichdi',this)">🥣 Khichdi</button>
+    <button class="filter-btn" onclick="filterCategory('southindian',this)">🥞 Chennai Express</button>
+    <button class="filter-btn" onclick="filterCategory('italian',this)">🍕 Italian Connection</button>
+    <button class="filter-btn" onclick="filterCategory('chinese',this)">🥡 China Town</button>
+    <button class="filter-btn" onclick="filterCategory('burgerwich',this)">🥪 Burgerwich</button>
+    <button class="filter-btn" onclick="filterCategory('momos',this)">🥟 Momos & Spring Roll</button>
+    <button class="filter-btn" onclick="filterCategory('snacks',this)">🍟 Snacks</button>
+    <button class="filter-btn" onclick="filterCategory('tandoor',this)">🫓 Tandoor Se</button>
+    <button class="filter-btn" onclick="filterCategory('sweets',this)">🍬 Meetha Maza</button>
+    <button class="filter-btn" onclick="filterCategory('drinks',this)">🥤 Chillerz & Beverages</button>
   </div>
 </div>
 
@@ -414,108 +416,113 @@ const EMAILJS_SERVICE_ID  = "service_8riowot";
 const EMAILJS_TEMPLATE_ID = "template_eyo9az1";
 
 const categoryTitles={
-  all:"All Items",soup:"🍜 Soup",burgerwich:"🥪 Burgerwich",italian:"🍕 Italian Connection",
-  snacks:"🍟 Snacks",chaat:"🥗 Dilli Ki Chaat",speciality:"⭐ Haldiram's Speciality",
-  thali:"🍛 Haldiram's Thali",kebabs:"🍢 Kebabs & More",mains:"🍲 Indian Main Course",
-  biryani:"🍚 Biryani",chawal:"🍚 Chawal Khazana",khichdi:"🥣 Khichdi",tandoor:"🫓 Tandoor Se",
-  ricebowl:"🍚 Rice Bowl",combos:"🍽️ Indian Combos",sides:"🥗 Side Story"
+  all:"All Items",readytocook:"🥣 Ready To Cook",chaat:"🥗 Dilli Ki Chaat",
+  combos:"🍽️ North Indian Combos",mains:"🍲 North Indian Main Course",
+  kebabs:"🍢 Kebabs & More",ricebowl:"🍚 Rice Bowl",kathi:"🌯 Kathi Roll's",
+  thali:"🍛 Thali",khichdi:"🥣 Khichdi",southindian:"🥞 Chennai Express",
+  italian:"🍕 Italian Connection",chinese:"🥡 China Town",burgerwich:"🥪 Burgerwich",
+  momos:"🥟 Momos & Spring Roll",snacks:"🍟 Snacks",tandoor:"🫓 Tandoor Se",
+  sweets:"🍬 Meetha Maza",drinks:"🥤 Chillerz & Beverages"
 };
 
 /* Replace img paths with your own product photos before going live */
 const products=[
-  {name:"Thupka",price:149,category:"soup",emoji:"🍜",desc:"Vegetable clear soup with noodles & momos.",rating:"4.3",isNew:false},
-  {name:"Bombay Masala Sandwich",price:179,category:"burgerwich",emoji:"🥪",desc:"Grilled, spiced Mumbai-style sandwich.",rating:"4.3",isNew:false},
-  {name:"Paneer Tikka Sandwich",price:169,category:"burgerwich",emoji:"🥪",desc:"Grilled sandwich with spiced paneer tikka.",rating:"4.3",isNew:false},
-  {name:"Corn & Spinach Sandwich",price:159,category:"burgerwich",emoji:"🥪",desc:"Grilled sandwich with corn & spinach.",rating:"4.3",isNew:false},
-  {name:"Veggie Cheese Sandwich",price:129,category:"burgerwich",emoji:"🧀",desc:"Grilled, loaded with melted cheese.",rating:"4.3",isNew:false},
-  {name:"Vegetable Sandwich",price:99,category:"burgerwich",emoji:"🥬",desc:"All sandwiches served grilled.",rating:"4.3",isNew:false},
-  {name:"Paneer Burger",price:159,category:"burgerwich",emoji:"🍔",desc:"Served with wafers.",rating:"4.3",isNew:true},
-  {name:"Double Cheese & Double Patty Burger",price:149,category:"burgerwich",emoji:"🍔",desc:"Served with wafers.",rating:"4.3",isNew:true},
-  {name:"Cheesy Veggie Burger",price:139,category:"burgerwich",emoji:"🍔",desc:"Served with wafers.",rating:"4.3",isNew:false},
-  {name:"Spicy Paneer Pizza",price:279,category:"italian",emoji:"🍕",desc:"",rating:"4.3",isNew:false},
-  {name:"Pizza Of Your Choice",price:279,category:"italian",emoji:"🍕",desc:"",rating:"4.3",isNew:false},
-  {name:"Farmhouse Pizza",price:269,category:"italian",emoji:"🍕",desc:"",rating:"4.3",isNew:false},
-  {name:"Margherita Pizza",price:239,category:"italian",emoji:"🍕",desc:"",rating:"4.3",isNew:false},
-  {name:"Penne In White Cheese Sauce",price:249,category:"italian",emoji:"🍝",desc:"",rating:"4.3",isNew:false},
-  {name:"Penne In Red Pasta Sauce",price:249,category:"italian",emoji:"🍝",desc:"",rating:"4.3",isNew:false},
-  {name:"Penne In Pink Cheese Sauce",price:249,category:"italian",emoji:"🍝",desc:"",rating:"4.3",isNew:false},
-  {name:"Crunchy Box",price:139,category:"snacks",emoji:"🍟",desc:"Onion ring + French fries.",rating:"4.3",isNew:true},
-  {name:"Onion Ring",price:139,category:"snacks",emoji:"🧅",desc:"",rating:"4.3",isNew:true},
-  {name:"Peri Peri Fries",price:129,category:"snacks",emoji:"🍟",desc:"",rating:"4.3",isNew:true},
-  {name:"French Fries",price:109,category:"snacks",emoji:"🍟",desc:"",rating:"4.3",isNew:false},
-  {name:"Sabudana Wada",price:109,category:"snacks",emoji:"🍩",desc:"",rating:"4.3",isNew:false},
-  {name:"Garlic Bread",price:99,category:"snacks",emoji:"🥖",desc:"",rating:"4.3",isNew:true},
-  {name:"Dhokla Platter",price:89,category:"snacks",emoji:"🟨",desc:"",rating:"4.3",isNew:false},
-  {name:"Ragi Papdi Chaat",price:149,category:"chaat",emoji:"🥗",desc:"",rating:"4.3",isNew:false},
-  {name:"Dahi Wada",price:129,category:"chaat",emoji:"🥣",desc:"",rating:"4.3",isNew:false},
-  {name:"Bhalla Ragi Papdi Chaat",price:129,category:"chaat",emoji:"🥗",desc:"",rating:"4.3",isNew:false},
-  {name:"Samosa Chaat",price:109,category:"chaat",emoji:"🔺",desc:"",rating:"4.3",isNew:false},
-  {name:"Aloo Tikki Chole",price:109,category:"chaat",emoji:"🧆",desc:"",rating:"4.3",isNew:false},
-  {name:"Dahi Puri",price:99,category:"chaat",emoji:"🫧",desc:"",rating:"4.3",isNew:false},
-  {name:"Chole Samosa",price:89,category:"chaat",emoji:"🔺",desc:"",rating:"4.3",isNew:false},
-  {name:"Pani Puri",price:79,category:"chaat",emoji:"🫧",desc:"",rating:"4.3",isNew:false},
-  {name:"Kurmuri Chowpati Bhel",price:79,category:"chaat",emoji:"🥗",desc:"",rating:"4.3",isNew:false},
-  {name:"Paneer Wale Chole Bhature",price:229,category:"speciality",emoji:"🫓",desc:"",rating:"4.3",isNew:false},
-  {name:"Chole Bhature",price:199,category:"speciality",emoji:"🫓",desc:"",rating:"4.3",isNew:false},
-  {name:"Cheese Pav Bhaji",price:199,category:"speciality",emoji:"🧀",desc:"",rating:"4.3",isNew:false},
-  {name:"Chole Kulcha",price:189,category:"speciality",emoji:"🫓",desc:"",rating:"4.3",isNew:false},
-  {name:"Mumbai Street Pav Bhaji",price:189,category:"speciality",emoji:"🍛",desc:"",rating:"4.3",isNew:false},
-  {name:"Shahi Raj Kachori",price:169,category:"speciality",emoji:"🥙",desc:"",rating:"4.3",isNew:false},
-  {name:"Haldiram\'s Royal Thali",price:409,category:"thali",emoji:"🍛",desc:"Paneer Butter Masala, Mix Veg, Kadhai Paneer, Dal Makhani, Rice, 2 Paratha, Raita, Rasmalai, Butter Milk.",rating:"4.3",isNew:false},
-  {name:"Punjabi Thali",price:359,category:"thali",emoji:"🍛",desc:"Soya Tikka Masala, Rajma Masala, Shahi Kofta Curry, Jeera Rice, 1 Lachha Paratha, 1 Butter Naan, Raita, Gulab Jamun.",rating:"4.3",isNew:true},
-  {name:"Haldiram\'s Special Thali",price:359,category:"thali",emoji:"🍛",desc:"Paneer Butter Masala, Mix Veg, Dal Makhani, Rice, 2 Paratha, Raita, Rasgulla.",rating:"4.3",isNew:false},
-  {name:"Kebab Platter Combo",price:399,category:"kebabs",emoji:"🍢",desc:"Paneer Tikka, Paneer Haryali, Soya Tikka, Hara Kebab, Stuff Tandoori Potato, Dal Makhani, 1 Garlic Naan.",rating:"4.3",isNew:true},
-  {name:"Kebab Platter",price:329,category:"kebabs",emoji:"🍢",desc:"Paneer Tikka, Paneer Haryali, Soya Tikka, Hara Kebab, Stuff Tandoori Potato.",rating:"4.3",isNew:true},
-  {name:"Tandoori Aloo Kebab",price:169,category:"kebabs",emoji:"🥔",desc:"",rating:"4.3",isNew:false},
-  {name:"Hara Bhara Kebab",price:159,category:"kebabs",emoji:"🟢",desc:"",rating:"4.3",isNew:false},
-  {name:"Laal Mirch Ka Paneer Tikka",price:299,category:"kebabs",emoji:"🌶️",desc:"",rating:"4.3",isNew:false},
-  {name:"Paneer Butter Masala",price:319,category:"mains",emoji:"🧈",desc:"",rating:"4.3",isNew:false},
-  {name:"Kadhai Paneer",price:319,category:"mains",emoji:"🍲",desc:"",rating:"4.3",isNew:false},
-  {name:"Palak Paneer",price:309,category:"mains",emoji:"🥬",desc:"",rating:"4.3",isNew:false},
-  {name:"Mix Veg",price:299,category:"mains",emoji:"🥘",desc:"",rating:"4.3",isNew:false},
-  {name:"Shahi Kofta Curry",price:299,category:"mains",emoji:"🟤",desc:"",rating:"4.3",isNew:false},
-  {name:"Soya Chaap Tikka Masala",price:289,category:"mains",emoji:"🍢",desc:"",rating:"4.3",isNew:false},
-  {name:"Kadhai Mushroom",price:279,category:"mains",emoji:"🍄",desc:"",rating:"4.3",isNew:false},
-  {name:"Dal Makhani",price:269,category:"mains",emoji:"🍲",desc:"",rating:"4.3",isNew:false},
-  {name:"Rajma Masala",price:259,category:"mains",emoji:"🫘",desc:"",rating:"4.3",isNew:false},
-  {name:"Dal Tadka",price:239,category:"mains",emoji:"🍲",desc:"",rating:"4.3",isNew:false},
-  {name:"Paneer Tikka Biryani",price:369,category:"biryani",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
-  {name:"Matka Biryani",price:329,category:"biryani",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
-  {name:"Vegetable Millet Biryani",price:319,category:"biryani",emoji:"🍚",desc:"",rating:"4.3",isNew:true},
-  {name:"Jeera Rice",price:189,category:"chawal",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
-  {name:"Green Peas Pulao",price:189,category:"chawal",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
-  {name:"Steam Rice",price:179,category:"chawal",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
-  {name:"Curd Rice",price:179,category:"chawal",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
-  {name:"Palak Paneer Khichdi",price:249,category:"khichdi",emoji:"🥣",desc:"",rating:"4.3",isNew:false},
-  {name:"Millet Khichdi",price:249,category:"khichdi",emoji:"🥣",desc:"",rating:"4.3",isNew:true},
-  {name:"Dal Khichdi",price:239,category:"khichdi",emoji:"🥣",desc:"",rating:"4.3",isNew:false},
-  {name:"Tandoori Paneer Paratha With Curd",price:149,category:"tandoor",emoji:"🫓",desc:"",rating:"4.3",isNew:false},
-  {name:"Tandoori Aloo Paratha With Curd",price:119,category:"tandoor",emoji:"🫓",desc:"",rating:"4.3",isNew:false},
-  {name:"Butter Garlic Naan",price:79,category:"tandoor",emoji:"🥖",desc:"",rating:"4.3",isNew:false},
-  {name:"Butter Naan",price:69,category:"tandoor",emoji:"🥖",desc:"",rating:"4.3",isNew:false},
-  {name:"Lachha Paratha",price:59,category:"tandoor",emoji:"🫓",desc:"",rating:"4.3",isNew:false},
-  {name:"Naan Plain",price:59,category:"tandoor",emoji:"🫓",desc:"",rating:"4.3",isNew:false},
-  {name:"Tandoori Butter Roti",price:49,category:"tandoor",emoji:"🫓",desc:"",rating:"4.3",isNew:false},
-  {name:"Tandoori Roti",price:39,category:"tandoor",emoji:"🫓",desc:"",rating:"4.3",isNew:false},
-  {name:"Tawa Paratha",price:39,category:"tandoor",emoji:"🫓",desc:"",rating:"4.3",isNew:false},
-  {name:"Palak Paneer Chawal",price:139,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:true},
-  {name:"Paneer Butter Masala Chawal",price:139,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:true},
-  {name:"Punjabi Chole Chawal",price:129,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:true},
-  {name:"Dal Makhani Chawal",price:129,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:true},
-  {name:"Mix Veg Chawal",price:129,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:true},
-  {name:"Rajma Chawal",price:129,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:true},
-  {name:"Dal Tadka Chawal",price:119,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:true},
-  {name:"Soya Chaap Tikka Masala & Amritsari Dal Makhani",price:229,category:"combos",emoji:"🍽️",desc:"Served with 1pc Naan, 1pc Lachha Paratha & Pickle.",rating:"4.3",isNew:false},
-  {name:"Paneer Butter Masala & Amritsari Dal Makhani",price:229,category:"combos",emoji:"🍽️",desc:"Served with 1pc Naan, 1pc Lachha Paratha & Pickle.",rating:"4.3",isNew:false},
+  {name:"Dosa Batter (Regular)",price:99,category:"readytocook",emoji:"🥣",desc:"Authentic Haldiram\'s recipe, for home use.",rating:"4.3",isNew:true},
+  {name:"Dosa Batter (Large)",price:149,category:"readytocook",emoji:"🥣",desc:"Authentic Haldiram\'s recipe, serves 6.",rating:"4.3",isNew:true},
+  {name:"Choley Samosa",price:89,category:"chaat",emoji:"🔺",desc:"Crushed samosa in piping hot choley gravy.",rating:"4.3",isNew:false},
+  {name:"Bhalla Ragi Papdi Chaat",price:129,category:"chaat",emoji:"🥗",desc:"Chatpata bhalla topping over crisp papdi.",rating:"4.3",isNew:false},
+  {name:"Dahi Wada",price:129,category:"chaat",emoji:"🥣",desc:"Soft fried lentil dumplings soaked in curd.",rating:"4.3",isNew:false},
+  {name:"Aloo Tikki Chole",price:109,category:"chaat",emoji:"🧆",desc:"Spicy chickpea curry with crispy potato fritters.",rating:"4.3",isNew:false},
+  {name:"Pani Puri",price:79,category:"chaat",emoji:"🫧",desc:"Crispy puri, tangy water, sweet chutney.",rating:"4.3",isNew:false},
   {name:"Kadhai Paneer & Amritsari Dal Makhani",price:229,category:"combos",emoji:"🍽️",desc:"Served with 1pc Naan, 1pc Lachha Paratha & Pickle.",rating:"4.3",isNew:false},
-  {name:"Palak Paneer & Amritsari Dal Makhani",price:229,category:"combos",emoji:"🍽️",desc:"Served with 1pc Naan, 1pc Lachha Paratha & Pickle.",rating:"4.3",isNew:false},
-  {name:"Mix Veg & Dal Makhani",price:219,category:"combos",emoji:"🍽️",desc:"Served with 1pc Naan, 1pc Lachha Paratha & Pickle.",rating:"4.3",isNew:false},
-  {name:"Mix Veg & Dal Tadka",price:209,category:"combos",emoji:"🍽️",desc:"Served with 1pc Naan, 1pc Lachha Paratha & Pickle.",rating:"4.3",isNew:false},
-  {name:"Boondi Raita",price:79,category:"sides",emoji:"🥣",desc:"",rating:"4.3",isNew:false},
-  {name:"Green Salad",price:79,category:"sides",emoji:"🥗",desc:"",rating:"4.3",isNew:false},
-  {name:"Masala Papad",price:49,category:"sides",emoji:"🫓",desc:"",rating:"4.3",isNew:true},
-  {name:"Plain Curd",price:39,category:"sides",emoji:"🥛",desc:"",rating:"4.3",isNew:false},
-  {name:"Green Salad + Papad",price:29,category:"sides",emoji:"🥗",desc:"",rating:"4.3",isNew:true}
+  {name:"Paneer Butter Masala & Amritsari Dal Makhani",price:229,category:"combos",emoji:"🍽️",desc:"Served with 1pc Naan, 1pc Lachha Paratha & Pickle.",rating:"4.3",isNew:false},
+  {name:"Soya Chaap Tikka Masala & Amritsari Dal Makhani",price:229,category:"combos",emoji:"🍽️",desc:"Served with 1pc Naan, 1pc Lachha Paratha & Pickle.",rating:"4.3",isNew:false},
+  {name:"Mix Veg & Amritsari Dal Makhani",price:219,category:"combos",emoji:"🍽️",desc:"Served with 1pc Naan, 1pc Lachha Paratha & Pickle.",rating:"4.3",isNew:false},
+  {name:"Kadhai Paneer",price:319,category:"mains",emoji:"🍲",desc:"Sizzling paneer in spicy onion-tomato gravy.",rating:"4.3",isNew:false},
+  {name:"Paneer Butter Masala",price:319,category:"mains",emoji:"🧈",desc:"Rich, buttery tomato gravy classic.",rating:"4.3",isNew:false},
+  {name:"Rajma Masala",price:259,category:"mains",emoji:"🫘",desc:"Hearty kidney bean curry.",rating:"4.3",isNew:true},
+  {name:"Mix Vegetable",price:299,category:"mains",emoji:"🥘",desc:"Mixed vegetable curry with a blend of spices.",rating:"4.3",isNew:false},
+  {name:"Soya Chaap Tikka Masala",price:289,category:"mains",emoji:"🍢",desc:"Smoky marinated soya chaap in spiced gravy.",rating:"4.3",isNew:false},
+  {name:"Amritsari Dal Makhani",price:269,category:"mains",emoji:"🍲",desc:"Creamy, rich, slow-cooked black lentils.",rating:"4.3",isNew:false},
+  {name:"Dal Tadka",price:239,category:"mains",emoji:"🍲",desc:"Yellow lentils tempered with cumin & ghee.",rating:"4.3",isNew:false},
+  {name:"Kebab Platter Combo with Dal Makhani & Garlic Naan",price:399,category:"kebabs",emoji:"🍢",desc:"Paneer Tikka, Paneer Haryali, Soya Tikka, Hara Kebab, Stuffed Tandoori Potato, Dal Makhani, Garlic Naan.",rating:"4.3",isNew:true},
+  {name:"Kebab Platter",price:329,category:"kebabs",emoji:"🍢",desc:"Paneer Tikka, Paneer Haryali, Soya Tikka, Hara Kebab, Stuffed Tandoori Potato.",rating:"4.3",isNew:true},
+  {name:"Laal Mirch Ka Paneer Tikka",price:299,category:"kebabs",emoji:"🌶️",desc:"Spicy paneer starter.",rating:"4.3",isNew:false},
+  {name:"Tandoori Aloo Kebab",price:169,category:"kebabs",emoji:"🥔",desc:"Smoky grilled baby potatoes with mint chutney.",rating:"4.3",isNew:false},
+  {name:"Hara Bhara Kebab",price:159,category:"kebabs",emoji:"🟢",desc:"Healthy vegetarian green kebab.",rating:"4.3",isNew:false},
+  {name:"Paneer Butter Masala Chawal",price:139,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
+  {name:"Rajma Chawal",price:129,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
+  {name:"Dal Makhani Chawal",price:129,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
+  {name:"Mix Veg Chawal",price:129,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
+  {name:"Punjabi Chole Chawal",price:129,category:"ricebowl",emoji:"🍚",desc:"",rating:"4.3",isNew:false},
+  {name:"Dal Tadka Chawal",price:119,category:"ricebowl",emoji:"🍚",desc:"Desi ghee tempered dal tadka with rice.",rating:"4.3",isNew:false},
+  {name:"Paneer Tikka Kathi Roll",price:179,category:"kathi",emoji:"🌯",desc:"Paneer tikka, green chutney & veggie salad in a wrap.",rating:"4.3",isNew:false},
+  {name:"Haldiram\'s Royal Thali",price:409,category:"thali",emoji:"🍛",desc:"Paneer Butter Masala, Kadhai Paneer, Dal Makhani, Mix Veg, Rice, 2 Paratha, Raita, Rasmalai, Butter Milk.",rating:"4.3",isNew:false},
+  {name:"Haldiram\'s Special Thali",price:359,category:"thali",emoji:"🍛",desc:"Paneer Butter Masala, Dal Makhani, Mix Veg, Rice, 2 Paratha, Raita, Rasgulla.",rating:"4.3",isNew:false},
+  {name:"Dal Chawal Khichdi",price:239,category:"khichdi",emoji:"🥣",desc:"Lentils & rice slow-cooked into warm comfort food.",rating:"4.3",isNew:false},
+  {name:"Mysore Masala Dosa",price:120,category:"southindian",emoji:"🫓",desc:"Golden dosa with spiced aloo masala.",rating:"4.3",isNew:false},
+  {name:"Coconut Masala Dosa",price:130,category:"southindian",emoji:"🫓",desc:"Crispy, savory & slightly sweet coconut filling.",rating:"4.3",isNew:true},
+  {name:"Ghee Roast Masala Dosa",price:140,category:"southindian",emoji:"🫓",desc:"Ghee-roasted, filled with spiced potato.",rating:"4.3",isNew:true},
+  {name:"Podi Masala Dosa",price:120,category:"southindian",emoji:"🫓",desc:"Layered with spicy podi masala & potato filling.",rating:"4.3",isNew:false},
+  {name:"Plain Dosa",price:90,category:"southindian",emoji:"🫓",desc:"Tawa-toasted, served with sambar & chutneys.",rating:"4.3",isNew:false},
+  {name:"Ghee Podi Plain Dosa",price:110,category:"southindian",emoji:"🫓",desc:"A simple twist with ghee & podi masala.",rating:"4.3",isNew:true},
+  {name:"Mix Veg Uttapam",price:100,category:"southindian",emoji:"🥞",desc:"Crispy base loaded with onions & tomatoes.",rating:"4.3",isNew:false},
+  {name:"Onion Uttapam",price:90,category:"southindian",emoji:"🥞",desc:"Topped with caramelized onions.",rating:"4.3",isNew:false},
+  {name:"Assorted South Indian Platter",price:180,category:"southindian",emoji:"🍽️",desc:"Idli, Medu Wada, Uttapam & Mini Dosa together.",rating:"4.3",isNew:false},
+  {name:"Idli Wada Sambhar",price:110,category:"southindian",emoji:"⚪",desc:"Steamed idlis & medu wada with sambar & chutneys.",rating:"4.3",isNew:false},
+  {name:"Upma",price:90,category:"southindian",emoji:"🍚",desc:"Comforting roasted semolina breakfast dish.",rating:"4.3",isNew:false},
+  {name:"Medu Wada",price:80,category:"southindian",emoji:"🍩",desc:"Crispy outside, soft inside lentil doughnuts.",rating:"4.3",isNew:false},
+  {name:"Idli Sambhar",price:80,category:"southindian",emoji:"⚪",desc:"Super-soft steamed idli with sambar.",rating:"4.3",isNew:false},
+  {name:"Ghee Podi Idli",price:90,category:"southindian",emoji:"⚪",desc:"Idlis tossed in ghee & spicy podi masala.",rating:"4.3",isNew:true},
+  {name:"Spicy Paneer Pizza",price:279,category:"italian",emoji:"🍕",desc:"Spicy paneer chunks on a fresh pan base.",rating:"4.3",isNew:false},
+  {name:"Farmhouse Pizza",price:269,category:"italian",emoji:"🍕",desc:"Corn, mushroom, tomato, onion & capsicum.",rating:"4.3",isNew:false},
+  {name:"Margherita Pizza",price:239,category:"italian",emoji:"🍕",desc:"Classic mozzarella & tangy tomato sauce.",rating:"4.3",isNew:false},
+  {name:"Penne In Red Pasta Sauce",price:249,category:"italian",emoji:"🍝",desc:"Tomato sauce, oregano & Italian seasoning.",rating:"4.3",isNew:false},
+  {name:"Penne In White Cheese Sauce",price:249,category:"italian",emoji:"🍝",desc:"Creamy cheese sauce & Italian seasoning.",rating:"4.3",isNew:false},
+  {name:"Penne In Pink Cheese Sauce",price:249,category:"italian",emoji:"🍝",desc:"Cheese blended with tomato sauce & exotic veggies.",rating:"4.3",isNew:false},
+  {name:"Thupka",price:149,category:"chinese",emoji:"🍜",desc:"Vegetable clear soup with momo & noodles.",rating:"4.3",isNew:false},
+  {name:"Chilly Garlic Fried Rice",price:170,category:"chinese",emoji:"🍚",desc:"Tossed in a savory chilly-garlic sauce.",rating:"4.3",isNew:false},
+  {name:"Chilly Garlic Noodles",price:170,category:"chinese",emoji:"🍜",desc:"Hakka noodles with garlic & schezwan chilli sauce.",rating:"4.3",isNew:false},
+  {name:"Vegetable Chowmein",price:160,category:"chinese",emoji:"🍜",desc:"Hakka noodles tossed with veggies & Asian sauces.",rating:"4.3",isNew:false},
+  {name:"Fried Rice",price:150,category:"chinese",emoji:"🍚",desc:"Stir-fried colorful vegetables & rice.",rating:"4.3",isNew:false},
+  {name:"Gravy Manchurian",price:180,category:"chinese",emoji:"🍡",desc:"Crispy vegetable fritters in tangy gravy.",rating:"4.3",isNew:false},
+  {name:"Dry Manchurian",price:170,category:"chinese",emoji:"🍡",desc:"Spicy & saucy crispy cauliflower.",rating:"4.3",isNew:false},
+  {name:"Crispy Veg",price:160,category:"chinese",emoji:"🥡",desc:"Crispy fried veggies in tomato-soy sauce.",rating:"4.3",isNew:false},
+  {name:"Gravy Manchurian & Chow Fried Rice",price:249,category:"chinese",emoji:"🥡",desc:"Served with 3pc Chilly Garlic Spring Roll.",rating:"4.3",isNew:false},
+  {name:"Gravy Manchurian & Vegetable Chowmein",price:249,category:"chinese",emoji:"🥡",desc:"Served with 3pc Chilly Garlic Spring Roll.",rating:"4.3",isNew:false},
+  {name:"Bombay Masala Sandwich",price:179,category:"burgerwich",emoji:"🥪",desc:"Bombay-style veggie & paneer stuffed sandwich, grilled.",rating:"4.3",isNew:false},
+  {name:"Double Patty Double Cheese Burger",price:149,category:"burgerwich",emoji:"🍔",desc:"Two patties, layers of melted cheese.",rating:"4.3",isNew:true},
+  {name:"Paneer Burger",price:159,category:"burgerwich",emoji:"🍔",desc:"Spicy paneer patty in a classic burger.",rating:"4.3",isNew:false},
+  {name:"Cheesy Veggie Burger",price:139,category:"burgerwich",emoji:"🍔",desc:"Crispy potato & veg patty loaded with cheese.",rating:"4.3",isNew:false},
+  {name:"Veggie Cheese Sandwich",price:129,category:"burgerwich",emoji:"🧀",desc:"Cheese blend with veggies, grilled.",rating:"4.3",isNew:false},
+  {name:"Spicy Veg Momo (Steamed)",price:140,category:"momos",emoji:"🥟",desc:"Soft dumplings with a flavorful veg mix, chilly garlic dip.",rating:"4.3",isNew:false},
+  {name:"Piri Piri Fries",price:129,category:"snacks",emoji:"🍟",desc:"Spiced & tangy seasoned fries.",rating:"4.3",isNew:true},
+  {name:"Onion Rings",price:139,category:"snacks",emoji:"🧅",desc:"Golden, perfectly seasoned onion rings.",rating:"4.3",isNew:false},
+  {name:"French Fries",price:109,category:"snacks",emoji:"🍟",desc:"Classic crispy golden fries.",rating:"4.3",isNew:false},
+  {name:"Butter Garlic Naan",price:79,category:"tandoor",emoji:"🥖",desc:"Garlic bits with a dollop of butter.",rating:"4.3",isNew:false},
+  {name:"Butter Naan",price:69,category:"tandoor",emoji:"🥖",desc:"Soft & fluffy, topped with butter.",rating:"4.3",isNew:false},
+  {name:"Lachha Paratha",price:59,category:"tandoor",emoji:"🫓",desc:"Layered bread cooked in the tandoor.",rating:"4.3",isNew:false},
+  {name:"Naan",price:59,category:"tandoor",emoji:"🫓",desc:"Soft & fluffy tandoor-baked bread.",rating:"4.3",isNew:false},
+  {name:"Tandoori Roti",price:39,category:"tandoor",emoji:"🫓",desc:"Soft & fluffy whole wheat bread.",rating:"4.3",isNew:false},
+  {name:"Tandoori Butter Roti",price:49,category:"tandoor",emoji:"🫓",desc:"Topped with a dollop of butter.",rating:"4.3",isNew:false},
+  {name:"Tandoori Aloo Paratha",price:119,category:"tandoor",emoji:"🫓",desc:"2 pcs, served with butter & curd.",rating:"4.3",isNew:false},
+  {name:"Tandoori Paneer Paratha",price:149,category:"tandoor",emoji:"🫓",desc:"2 pcs, served with butter & curd.",rating:"4.3",isNew:false},
+  {name:"Gulab Jamun (2pc)",price:60,category:"sweets",emoji:"🟤",desc:"Soft syrupy balls, melt-in-your-mouth.",rating:"4.3",isNew:false},
+  {name:"Rasmalai",price:90,category:"sweets",emoji:"🥛",desc:"Pillowy cheese balls in creamy milk, 2pcs.",rating:"4.3",isNew:false},
+  {name:"Kesarbhog (2pc)",price:70,category:"sweets",emoji:"🟠",desc:"Bengali sweet, like rasgulla with stuffing.",rating:"4.3",isNew:false},
+  {name:"Choco Temptation",price:150,category:"sweets",emoji:"🍫",desc:"Rich, irresistible chocolate dessert.",rating:"4.3",isNew:false},
+  {name:"Tiramisu",price:180,category:"sweets",emoji:"🍰",desc:"Classic Italian dessert, creamy & rich.",rating:"4.3",isNew:false},
+  {name:"Cold Coffee",price:70,category:"drinks",emoji:"🧊",desc:"Creamy, chilled coffee treat.",rating:"4.3",isNew:false},
+  {name:"Lemon Honey Iced Tea",price:60,category:"drinks",emoji:"🍋",desc:"Zesty, refreshing, perfectly sweetened.",rating:"4.3",isNew:false},
+  {name:"Mango Lassi",price:70,category:"drinks",emoji:"🥭",desc:"Tropical twist on classic sweet lassi.",rating:"4.3",isNew:false},
+  {name:"Masala Butter Milk",price:25,category:"drinks",emoji:"🥛",desc:"Savory spiced buttermilk.",rating:"4.3",isNew:false},
+  {name:"Mix Fruit Drink",price:70,category:"drinks",emoji:"🧃",desc:"Light, refreshing fruit blend.",rating:"4.3",isNew:false},
+  {name:"Sweet Lassi",price:60,category:"drinks",emoji:"🥛",desc:"Timeless, thick chilled yogurt drink.",rating:"4.3",isNew:false},
+  {name:"Coca-Cola (Can)",price:40,category:"drinks",emoji:"🥤",desc:"",rating:"4.3",isNew:false},
+  {name:"Fanta (Can)",price:40,category:"drinks",emoji:"🥤",desc:"",rating:"4.3",isNew:false},
+  {name:"Sprite (Can)",price:40,category:"drinks",emoji:"🥤",desc:"",rating:"4.3",isNew:false},
+  {name:"Thums Up (Can)",price:40,category:"drinks",emoji:"🥤",desc:"",rating:"4.3",isNew:false},
+  {name:"Diet Coke (Can)",price:40,category:"drinks",emoji:"🥤",desc:"",rating:"4.3",isNew:false}
 ];
 
 const categoryGradients={
@@ -780,7 +787,7 @@ function showSuccessPopup(){
       p.classList.remove('show','bursting');
       bar.classList.remove('filling');
     }, 450);
-  }, 2600);
+  }, 3000);
 }
 
 let toastTimer;
