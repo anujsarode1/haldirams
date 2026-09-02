@@ -27,13 +27,13 @@ body{background:var(--cream);color:var(--text);font-family:'Mukta',sans-serif;ov
 
 /* HEADER */
 header{
-  background:linear-gradient(135deg,#8f1a1f 0%,#c1272d 55%,#a3201f 100%);
-  color:white;box-shadow:0 4px 20px rgba(0,0,0,.3);
+  background:white;
+  color:rgb(0, 0, 0);box-shadow:0 4px 20px rgba(0,0,0,.3);
   position:sticky;top:0;z-index:200;
 }
 .header-inner{max-width:1400px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px;}
 .logo-text{line-height:1.1;}
-.logo-text h1{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;letter-spacing:.5px;}
+.logo-text h1{font-family:'Playfair Display',serif;}
 .logo-text span{font-size:11px;opacity:.9;letter-spacing:1.5px;text-transform:uppercase;}
 .header-right{display:flex;align-items:center;gap:10px;}
 
@@ -45,7 +45,7 @@ header{
   display:flex;align-items:center;gap:6px;
 }
 
-.cart-btn{position:relative;background:var(--white);color:var(--red);border:none;cursor:pointer;padding:10px 20px;border-radius:30px;font-family:'Mukta',sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:all .2s;white-space:nowrap;}
+.cart-btn{position:relative;background:var(--white);color:var(--black);border:none;cursor:pointer;padding:10px 20px;border-radius:30px;font-family:'Mukta',sans-serif;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:all .2s;white-space:nowrap;}
 .cart-btn:hover{background:var(--cream);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.25);}
 .cart-badge{background:var(--gold);color:var(--brown);width:22px;height:22px;border-radius:50%;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;}
 
@@ -59,7 +59,7 @@ header{
 /* FILTER */
 .filter-section{background:white;border-bottom:3px solid #f5e3c2;box-shadow:0 2px 8px rgba(0,0,0,.06);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:81px;z-index:190;}
 .filter-section::-webkit-scrollbar{display:none;}
-.filter-scroll{display:flex;gap:8px;padding:12px 16px;min-width:fit-content;}
+.filter-scroll{display:flex;gap:8px;padding:6px 8px;min-width:fit-content;}
 .filter-btn{padding:9px 18px;border:2px solid #f0dbb0;background:white;cursor:pointer;border-radius:25px;font-weight:700;white-space:nowrap;transition:all .25s;font-size:13px;color:#555;font-family:'Mukta',sans-serif;letter-spacing:.3px;}
 .filter-btn:hover,.filter-btn.active{background:var(--red);color:white;border-color:var(--red);box-shadow:0 3px 10px rgba(193,39,45,.35);transform:translateY(-1px);}
 
@@ -286,7 +286,7 @@ footer strong{color:var(--gold);}
   <div class="header-inner">
     <div class="logo-text">
       <h1>Haldiram's</h1>
-      <span>Taste of Tradition</span>
+      <!-- <span>Taste of Tradition</span> -->
     </div>
     <div class="header-right">
       <div class="table-pill" id="tablePill" style="display:none">🪑 Table <span id="tablePillNum"></span></div>
